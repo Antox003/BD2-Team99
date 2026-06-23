@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}HomePage{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
+
+<body>
+    <h1 id="titolo">Revisione Paper</h1>
+    <h3 id="spiegazione">Revisiona il file pdf utilizzando un gruppo di LLM per verificarne la correttezza</h3>
+
+    <form action="{{ url_for('carica_e_analizza') }}" method="POST" enctype="multipart/form-data">
+        
+        <div class="contenitore-upload">
+            <label for="carica-pdf" class="box-upload">
+                <span class="testo-principale" id="nome-file">Seleziona il file PDF</span>
+                <span class="testo-secondario">o trascina e lascia il file pdf qui</span>
+            </label>
+            <input type="file" id="carica-pdf" name="file_pdf" accept=".pdf" class="input" style="display: none;" required>
+        </div>
+
+        <div class="contenitore-opzione">
+            <input type="checkbox" id="check-prompt" name="usa_prompt">
+            <label for="check-prompt">Usa prompt personalizzato</label>
+        </div>
+
+        <div id="area-prompt" class="contenitore-prompt" style="display: none;">
+            <textarea id="testo-prompt" name="testo_prompt" placeholder="Inserisci qui le tue istruzioni personalizzate per gli LLM..."></textarea>
+        </div>
+
+        <p id="messaggio-errore" class="nascosto" style="color: red; text-align: center; display: none;">Attenzione: inserire un file PDF!</p>
+        
+        <div class="contenitore-bottone">
+            <button type="submit" id="bottone-revisione" class="btn-inizia">Inizia revisione</button>
+        </div>
+
+    </form>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+{% endblock %}

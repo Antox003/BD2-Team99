@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-base.css') }}">
+    <title>{% block title %}HeaderFooter{% endblock %}</title>
+</head>
+<body>
+    
+<header class="fascia-superiore"> 
+    <div class="header-left">
+        <a href="./" class="header-link">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-immagine">
+            <h1>LLM Review</h1>
+        </a>
+    </div>
+
+    <button class="hamburger" id="hamburger-btn">
+        &#9776;
+    </button>
+
+    <div class="header-right" id="nav-menu">
+        <a href="./storico" class="nav-link">Storico</a>
+        <a href="./dataset" class="nav-link">Dataset</a>
+        <a href="./" class="nav-link">Carica</a>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('logout') }}" class="nav-link logout-btn">Esci</a>
+        {% else %}
+            <a href="./login" class="nav-link login-btn">Accedi</a>
+        {% endif %}
+    </div>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer-moderno">
+    <div class="footer-content">
+        <p class="footer-title">LLM Review</p>
+        <p class="footer-devs">Sviluppato da Antonio Margio, Errico Aquino, Francesco Pio Bottaro</p>
+        <a href="https://www.unisa.it/" target="_blank" class="footer-link">Università degli Studi di Salerno</a>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2026 Tutti i diritti riservati.</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+</body>
+</html>

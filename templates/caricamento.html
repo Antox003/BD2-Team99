@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %} Caricamento {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-caricamento.css') }}">
+
+<div class="loader-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh;">
+    <div class="spinner"></div>
+    
+    {% if paper_id == 'tutti' %}
+        <h2 style="margin-top:20px;">Analisi Massiva in Corso...</h2>
+        <p style="text-align:center;">Le 3 NVIDIA A800 stanno macinando l'intero database.<br><b style="color:red;">Non chiudere questa finestra!</b></p>
+    {% else %}
+        <h2 style="margin-top:20px;">Analisi del Paper</h2>
+        <p>Stiamo analizzando il PDF. Questa operazione richiede la potenza delle GPU, attendi...</p>
+    {% endif %}
+</div>
+
+<script>
+    window.onload = function() {
+        
+        // Aggiungiamo per stampare la variabile di Python dentro a Javascript!
+        if ('{{ paper_id }}' === 'tutti') {
+            // ==========================================
+            // LOGICA PER TUTTI I PAPER INSIEME (Generata da Python)
+            // ==========================================
+            fetch("{{ url_for('api_sottometti_tutti') }}", {
+                method: 'POST'
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if(data.success) {
+                    window.location.href = "/verdetto_massivo/" + data.task_id;
+                } else {
+                    mostraErrore(data.error);
+                }
+            })
+            .catch(error => mostraErroreRete(error));
+
+        }else{
+            // ==========================================
+            // LOGICA PER SINGOLO PAPER (Generata da Python)
+            // ==========================================
+            fetch("{{ url_for('sottometti_analisi', paper_id=paper_id) }}", {
+                method: 'POST'
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if(data.success) {
+                    window.location.href = "{{ url_for('verdetto', paper_id=paper_id) }}";
+                } else {
+                    mostraErrore(data.error);
+                }
+            })
+            .catch(error => mostraErroreRete(error));
+        }
+    };
+
+    function mostraErrore(messaggio) {
+        document.querySelector('.loader-card').innerHTML = "<h2>Errore Critico ❌</h2><p>" + messaggio + "</p><a href='/dataset' class='btn btn-primary'>Torna indietro</a>";
+    }
+
+    function mostraErroreRete(error) {
+        console.error("Errore di rete:", error);
+        document.querySelector('.loader-card').innerHTML = "<h2>Errore di Connessione</h2><p>Impossibile contattare il server AI. Potrebbe essere andato in Timeout.</p><a href='/dataset' class='btn btn-primary'>Torna indietro</a>";
+    }
+</script>
+
+{% endblock %}

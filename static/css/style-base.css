@@ -1,0 +1,213 @@
+/* Rimuove i margini bianchi predefiniti che i browser mettono intorno alla pagina */
+html, body {
+    margin: 0;
+    font-family: Arial, sans-serif; /*font per il testo */
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
+.fascia-superiore {
+    background-color: #ffffff; 
+    /*NON A TUTTA LUNGHEZZA: impostiamo una larghezza massima */
+    width: 95%;           /* Occupa il 95% della larghezza dello schermo */
+    max-width: 1200px;    
+    /*BORDI ARROTONDATI */
+    border-radius: 15px;  /* Arrotonda gli angoli come nella foto */
+    /* POSIZIONAMENTO: lo stacchiamo dai bordi e lo centriamo */
+    margin:  auto;    /* 20px di spazio sopra, 'auto' lo centra a destra e sinistra */
+    /*SPAZIO INTERNO */
+    padding: 15px 30px;   
+    box-sizing: border-box;
+    /*OMBRA PIÙ PROFONDA (per l'effetto sollevato) */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    /* Allineamento base per il titolo */
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+    justify-content: space-between;
+}
+
+/* Togliamo i margini all'h1 per non farlo uscire dalla scatola */
+.fascia-superiore h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #030438;
+}
+
+.header-left{
+
+    display: flex;
+    align-items: center;
+}
+
+.fascia-superiore .logo-immagine{
+
+    max-width: 18%;
+}
+
+.header-right .nav-link {
+
+    text-decoration: none;
+    color: #000000;
+    margin: 15px;
+    font-weight: 600;
+    display: inline-block;
+    transition: ease-in 0.2s;
+}
+
+.header-right .nav-link:hover {
+
+    transform: scale(1.1);
+    transition: ease-in 0.2s;
+}
+
+.header-link {
+    text-decoration: none; /* Rimuove la sottolineatura */
+    color: inherit;        /* Mantiene il colore originale del testo (h1) */
+    display: flex;         /* Mantiene l'allineamento orizzontale tra logo e testo */
+    align-items: center;
+}
+
+.header-right .nav-link[href="./login"] {
+    color: #030438; /* Colore scuro come il titolo */
+    border: 1px solid #030438;
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+/* Effetto hover specifico per il tasto accedi */
+.header-right .nav-link[href="./login"]:hover {
+    background-color: #030438;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+
+/* Contenitore principale del footer */
+.footer-moderno {
+    background-color: #1e293b; /* Grigio ardesia scuro ed elegante */
+    color: #f8fafc; /* Bianco sporco per una migliore leggibilità */
+    padding: 30px 20px 20px; /* Più spazio sopra per respirare */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Contenuto centrale */
+.footer-content {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.footer-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px; /* Spazia leggermente le lettere */
+}
+
+.footer-devs {
+    color: #94a3b8; /* Grigio chiaro per non rubare l'attenzione */
+    margin: 0 0 15px 0;
+    font-size: 15px;
+}
+
+/* Stile del link con effetto sottolineatura animata */
+.footer-link {
+    color: #38bdf8; /* Azzurro moderno */
+    text-decoration: none;
+    font-weight: 600;
+    position: relative; /* Necessario per l'animazione della linea */
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+/* Crea la linea invisibile sotto il link */
+.footer-link::after {
+    content: '';
+    position: absolute;
+    width: 0; /* Inizia invisibile */
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #38bdf8;
+    transition: width 0.3s ease; /* L'animazione dura 0.3 secondi */
+}
+
+/* Effetto al passaggio del mouse */
+.footer-link:hover {
+    color: #7dd3fc; /* Diventa più chiaro */
+}
+
+/* La linea si espande al 100% della larghezza */
+.footer-link:hover::after {
+    width: 100%;
+}
+
+/* Sezione inferiore (Copyright) */
+.footer-bottom {
+    width: 100%;
+    max-width: 800px; /* Limita la larghezza della linea */
+    border-top: 1px solid #334155; /* Linea separatrice molto delicata */
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #64748b; /* Grigio scuro per le note a piè di pagina */
+    font-size: 13px;
+}
+
+/* Nascondiamo il bottone sui computer*/
+.hamburger {
+    display: none; 
+    background: none;
+    border: none;
+    font-size: 28px;       /* Grandezza delle tre lineette */
+    color: #030438;
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 768px) {
+    /* Mostriamo il bottone hamburger */
+    .hamburger {
+        display: block;
+    }
+
+    /* Nascondiamo il menù normale e lo prepariamo a tendina */
+    .header-right {
+        display: none;               /* Nascosto di base */
+        flex-direction: column;      /* Impila i link in verticale */
+        position: absolute;          /* Lo stacca dalla barra per farlo "cadere" sotto */
+        top: 100%;                   /* Lo fa partire esattamente da sotto l'header */
+        left: 0;                     
+        width: 100%;                 /* Largo quanto l'header */
+        background-color: #ffffff;   /* Sfondo bianco */
+        border-radius: 15px;         /* Mantiene lo stile arrotondato */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        margin-top: 10px;            /* Spazio tra header e tendina */
+        gap: 0;                      /* Azzera lo spazio orizzontale */
+        
+    }
+
+    /* 3. Classe speciale che il JavaScript accenderà e spegnerà */
+    .header-right.active {
+        display: flex;
+    }
+
+    /* 4. Aggiustiamo i link per farli sembrare bottoni larghi da cliccare col dito */
+    .header-right .nav-link {
+        padding: 10px 0px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+}

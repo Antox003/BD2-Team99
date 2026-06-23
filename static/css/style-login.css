@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /*font per il testo */
+    min-height: 100vh;
+    background-color: #e3f2fd;
+}
+
+/* Contenitore per centrare il box nella pagina */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+/* La scatola blu scuro */
+.login-box {
+    background-color: #1e293b;
+    padding: 40px;
+    border-radius: 20px;       /* Angoli arrotondati come l'header */
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* Gruppi di input */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: #f8f9fa;
+    font-size: 16px;
+    box-sizing: border-box; /* Fondamentale per non far uscire l'input dal box */
+    transition: 0.3s;
+}
+
+/* Effetto quando clicchi dentro il campo */
+.input-group input:focus {
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+}
+
+/* Il bottone Accedi */
+.btn-accedi {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1f631f; /* Verde per l'azione positiva */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-accedi:hover {
+    background-color: #2a852a;
+    transform: scale(1.02);
+}

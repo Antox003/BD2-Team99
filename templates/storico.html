@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Storico Analisi{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-storico.css') }}">
+<body class="storico-body">
+
+    <header class="storico-header">
+        <h1>📚 Storico Paper Analizzati</h1>
+        <p>Elenco delle analisi. Clicca su "Visualizza" per leggere tutti i responsi.</p>
+    </header>
+
+    <main class="storico-main">
+        <div class="storico-table-container">
+            <table class="storico-table">
+                <thead>
+                    <tr>
+                        <th>Nome Paper</th>
+                        <th>Azione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paper_id, dati in dati_storico.items() %}
+                    <tr>
+                        <td>{{ dati.titolo }}</td>
+                        <td>
+                            <button class="storico-btn" onclick="apriPopup('{{ paper_id }}')">Visualizza Responsi</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px;">Nessuna analisi presente nello storico.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="storicoModal" class="storico-modal">
+        <div class="storico-modal-content">
+            <span class="storico-close" onclick="chiudiPopup()">&times;</span>
+            
+            <h2 id="modalTitolo" class="storico-titolo">Titolo Paper</h2>
+            
+            <div id="modalListaResponsi" class="storico-lista-responsi">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // TRUCCO JINJA: Trasformiamo il dizionario Python 'dati_storico' 
+        // in un oggetto Javascript reale. L'uso di tojson e safe è fondamentale!
+        const databaseVero = {{ dati_storico | tojson | safe }};
+
+        function apriPopup(idPaper) {
+            const modal = document.getElementById('storicoModal');
+            const titoloEl = document.getElementById('modalTitolo');
+            const listaResponsiEl = document.getElementById('modalListaResponsi');
+
+            // Peschiamo dai dati veri passati da Flask
+            const dati = databaseVero[idPaper];
+
+            // 1. Imposta il titolo nel modal
+            titoloEl.innerText = dati.titolo;
+
+            // 2. Svuota eventuali responsi vecchi rimasti aperti
+            listaResponsiEl.innerHTML = '';
+
+            // 3. Genera un box per ogni responso di questo specifico paper
+            dati.responsi.forEach(responso => {
+                
+                let classeBadge = 'storico-badge-accettato';
+                
+                // Normalizziamo in minuscolo per evitare errori (es. "Revisione" vs "revisione")
+                const esitoClean = (responso.esito || "").toLowerCase(); 
+                
+                if (esitoClean.includes('revisione')) classeBadge = 'storico-badge-revisione';
+                if (esitoClean.includes('rifiutato') || esitoClean.includes('reject')) classeBadge = 'storico-badge-rifiutato';
+
+                const bloccoHTML = `
+                    <div class="storico-blocco-responso">
+                        <h3 class="storico-categoria-responso">Modello: ${responso.categoria}</h3>
+                        <div class="storico-badge ${classeBadge}">${responso.esito}</div>
+                        
+                        <div class="storico-box-motivazione">
+                            <div class="storico-label-motivazione">MOTIVAZIONE:</div>
+                            <div class="storico-testo-motivazione">${responso.motivazione}</div>
+                        </div>
+                    </div>
+                `;
+                listaResponsiEl.innerHTML += bloccoHTML;
+            });
+
+            // 4. Mostra il popup
+            modal.style.display = 'flex';
+        }
+
+        function chiudiPopup() {
+            document.getElementById('storicoModal').style.display = 'none';
+        }
+
+        // Chiude il modal se l'utente clicca fuori dal riquadro bianco
+        window.onclick = function(event) {
+            const modal = document.getElementById('storicoModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+{% endblock %}

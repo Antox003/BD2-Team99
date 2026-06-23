@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Dataset{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-dataset.css') }}">
+
+<body>
+    <br><br><br><br>
+    <div class="container-dataset">
+        <div class="card">
+            <div class="top">
+                <div class="title">
+                    <h2>Dataset</h2>
+                    <p>Gestisci i PDF nel tuo database</p>
+                </div>
+                
+                {% if session.get('user_id') %}
+                <form action="{{ url_for('upload_pdf') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+                    <label class="btn btn-primary" for="carica-pdf">
+                        + Aggiungi PDF
+                        <input type="file" id="carica-pdf" name="file_pdf" accept=".pdf" class="input-nascosto" onchange="this.form.submit()">
+                    </label>
+                </form>
+                {% endif %}
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Titolo</th>
+                            <th>Testo PDF</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for paper in lista_papers %}
+                        <tr>
+                            <td class="title-pdf">{{ paper.titolo }}</td>
+                            <td>
+                                <a href="{{ url_for('visualizza_pdf', paper_id=paper['_id']) }}" target="_blank" class="btn btn-secondary">Visualizza</a>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    
+                                    <!-- Questo bottone manda direttamente alla pagina di caricamento -->
+                                   <form action="{{ url_for('caricamento', paper_id=paper['_id']) }}" method="GET" style="margin: 0;">
+                                        <button type="submit" class="btn btn-outline">Analizza</button>
+                                    </form>
+
+                                    {% if session.get('user_id') %}
+                                    <form action="{{ url_for('rimuovi_pdf', paper_id=paper['_id']) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo PDF?');" style="margin: 0;">
+                                        <button type="submit" class="btn btn-danger">Rimuovi</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px;">Nessun PDF trovato nel database.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="bottom-actions">
+                <a href="{{ url_for('caricamento', paper_id='tutti') }}" class="btn btn-primary" onclick="return confirm('Attenzione: Le 3 GPU verranno messe sotto sforzo per analizzare tutto il database. Procedere?');">
+                    Sottometti Tutti i Paper
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+</body>
+{% endblock %}

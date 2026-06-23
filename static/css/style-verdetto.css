@@ -1,0 +1,84 @@
+/* MODIFICA QUESTA PARTE */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    /* Fondamentale: obbliga il body a essere alto almeno quanto lo schermo */
+    min-height: 100vh; 
+    background-color: #e3f2fd; /* Il celeste che si vede in foto */
+}
+
+/* AGGIUNGI QUESTA REGOLA */
+main {
+    flex: 1; /* Questo occupa tutto lo spazio vuoto centrale */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra la card verticalmente */
+    align-items: center;     /* Centra la card orizzontalmente */
+    width: 100%;
+}
+
+.card {
+    background: #ffffff; 
+    /* La larghezza scala fluidamente tra 280px e 800px */
+    width: clamp(280px, 92%, 800px); 
+    
+    /* Padding dinamico: più respiro su PC, più compatto su smartphone */
+    padding: clamp(20px, 6vw, 50px); 
+    
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(13, 71, 161, 0.1);
+    text-align: center;
+    box-sizing: border-box;
+    margin: 20px 0;
+    
+    /* Animazione morbida per il ridimensionamento */
+    transition: all 0.3s ease-in-out;
+}
+
+.card h1 {
+    margin: 0 0 clamp(15px, 4vw, 30px) 0;
+    color: #2c3e50;
+    /* Il titolo si rimpicciolisce gradualmente */
+    font-size: clamp(1.4rem, 5vw, 28px); 
+    font-weight: 800;
+}
+
+.verdetto {
+    color: rgb(255, 0, 0);
+    display: inline-block;
+    /* Anche i margini e il padding del badge diventano dinamici */
+    padding: clamp(10px, 2vw, 14px) clamp(20px, 5vw, 36px);
+    border-radius: 50px;
+    font-size: clamp(16px, 3vw, 20px); 
+    font-weight: 800;
+    margin-bottom: clamp(20px, 6vw, 40px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.motivazione {
+    background-color: #ffffff; 
+    border-radius: 16px;
+    /* Spazio interno che si adatta allo schermo */
+    padding: clamp(15px, 4vw, 30px); 
+    text-align: left;
+    border: 1px solid #bbdefb;
+}
+
+.motivazione-titolo {
+    /* Testo piccolo sopra la motivazione: scala leggermente */
+    font-size: clamp(12px, 2vw, 14px);
+    color: #92b4f1;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.motivazione-testo {
+    color: #2c3e50;
+    /* La motivazione deve restare leggibile: scala tra 15px e 18px */
+    font-size: clamp(15px, 2.5vw, 18px); 
+    font-weight: 500;
+    line-height: 1.5;
+}

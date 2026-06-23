@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Verdetto{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-verdetto.css') }}">
+
+{% if tipo_analisi == 'multiplo' %}
+    <h1 style="text-align: center; margin-top: 30px;">Verdetti Massivi dell'Intero Dataset</h1>
+    
+    {% for paper in lista_risultati %}
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin: 40px 20px 20px 20px; border-left: 5px solid #1a5c8a;">
+            <h2 style="margin: 0; color: #333;">📄 {{ paper.titolo }}</h2>
+        </div>
+
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; padding: 0 20px;">
+            {% for modello, dati in paper.risultati.items() %}
+            <div class="card" style="flex: 1; min-width: 300px; max-width: 500px;">
+                <h3 style="text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">{{ modello }}</h3>
+                <div class="verdetto">
+                    {{ dati.verdetto }}
+                </div>
+                <div class="motivazione">
+                    <div class="motivazione-titolo">Motivazione:</div>
+                    <div class="motivazione-testo">
+                        {{ dati.motivazione }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr style="margin-top: 40px; border: 1px solid #ddd; width: 90%;">
+    {% endfor %}
+
+{% else %}
+    <h1 style="text-align: center; margin-top: 30px;">Verdetti Multi-Modello</h1>
+    <h3 style="text-align: center; color: gray;">{{ titolo_paper }}</h3>
+
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; padding: 0 20px;">
+        {% for modello, dati in risultati.items() %}
+        <div class="card" style="flex: 1; min-width: 300px; max-width: 500px;">
+            <h2 style="text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">{{ modello }}</h2>
+            <div class="verdetto">
+                {{ dati.verdetto }}
+            </div>
+            <div class="motivazione">
+                <div class="motivazione-titolo">Motivazione della decisione:</div>
+                <div class="motivazione-testo">
+                    {{ dati.motivazione }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div style="text-align: center; margin-top: 40px; margin-bottom: 40px; display: flex; gap: 15px; justify-content: center;">
+    
+    {% if tipo_analisi == 'multiplo' %}
+        <a href="{{ url_for('esporta_excel_massivo', task_id=task_id) }}" class="btn btn-success" style="background-color: #28a745; color: white;">
+            ⬇️ Scarica Report Completo (Excel)
+        </a>
+    {% else %}
+        <a href="{{ url_for('esporta_excel', paper_id=paper_id) }}" class="btn btn-success" style="background-color: #28a745; color: white;">
+            ⬇️ Scarica Risultati (Excel)
+        </a>
+    {% endif %}
+
+    <a href="{{ url_for('dataset') }}" class="btn btn-primary">Torna al Dataset</a>
+</div>
+{% endblock %}

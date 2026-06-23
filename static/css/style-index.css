@@ -1,0 +1,187 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /*font per il testo */
+    min-height: 100vh;
+    background-color: #e3f2fd;
+}
+
+#titolo{
+    color: black;
+    text-align: center;
+}
+
+#spiegazione{
+
+    text-align: center;
+    color: gray;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Posiziona il contenitore al centro della pagina con un po' di margine sopra */
+.contenitore-upload {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.box-upload {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Centra il testo in orizzontale */
+    align-items: center;     /* Centra il testo in verticale */
+    width: 300px;            /* Larghezza del box */
+    height: 150px;           /* Altezza del box */
+    
+    border: 3px dashed #2c3e50; /* Bordo tratteggiato */
+    border-radius: 15px;        /* Arrotonda gli angoli */
+    background-color: #f8f9fa;  /* Sfondo grigio  */
+    
+    color: #2c3e50;             
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;            /* Fa apparire la "manina" quando ci passi sopra */
+    transition: 0.3s;    
+    flex-direction: column;       
+}
+
+/* Stile per la scritta in alto (più grande ed evidente) */
+.testo-principale {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Crea un piccolo spazio tra la scritta sopra e quella sotto */
+}
+
+/* Stile per la scritta in basso (più piccola ) */
+.testo-secondario {
+    font-size: 14px;
+    color: #6c757d; 
+    font-weight: normal;
+}
+
+/* Effetto quando passi sopra il box con il mouse */
+.box-upload:hover {
+    background-color: #e9ecef;  /* Sfondo leggermente più scuro */
+    transform: scale(1.02);     /* Ingrandisce il box del 2% per un effetto pop */
+}
+
+/* Nasconde il pulsante standard del browser */
+.input {
+    display: none;
+}
+
+#sotto-testo{
+
+    text-align: center;
+    color: gray;
+}
+
+/* Lo stile del testo di errore */
+#messaggio-errore {
+    color: red;               /* Colore rosso */
+    font-weight: bold;        /* Testo in grassetto */
+    text-align: center;      
+    margin-top: 15px;         /* Un po' di spazio dal box del PDF */
+}
+
+/* Questa è la classe che nasconde le cose! */
+.nascosto {
+    display: none;
+}
+
+.contenitore-bottone {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+/* Stile bottone */
+.btn-inizia {
+    background-color: #2c3e50; 
+    color: #ffffff;
+    padding: 15px 40px;        /* Spazio interno (verticale e orizzontale) */
+    font-size: 18px;
+    font-weight: bold;
+    border: none;              /* Toglie il bordo standard */
+    border-radius: 8px;        /* Arrotonda gli angoli */
+    cursor: pointer;
+    transition: 0.3s;          /* Animazione */
+}
+
+/* Effetto al passaggio del mouse */
+.btn-inizia:hover {
+    background-color: #1a252f; 
+    transform: scale(1.05);    /* Ingrandisce leggermente il bottone */
+}
+
+/* Questa classe verrà attivata da JavaScript solo quando il file è "in volo" sopra il box */
+.box-upload.drag-attivo {
+    background-color: #d1ecf1; /* Un azzurrino chiaro */
+    border-color: #17a2b8;     /* Bordo azzurro scuro */
+    transform: scale(1.05);    /* Si ingrandisce un po' per accogliere il file */
+    position: relative; /* FONDAMENTALE: impedisce alla X di andare fuori dal box! */
+}
+
+.chiudi-icona {
+    position: absolute; /* Sgancia la X dal testo e le permette di "volare" */
+    top: 10px;          /* Distanza dal bordo alto */
+    right: 15px;        /* Distanza dal bordo destro */
+    font-size: 20px;
+    color: #e74c3c;     /* Colore rosso */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s; /* Animazione */
+}
+
+/* Effetto quando passi sopra la X col mouse */
+.chiudi-icona:hover {
+    color: #c0392b;        /* Diventa rosso scuro */
+    transform: scale(1.2); /* Si ingrandisce leggermente */
+}
+
+/* Allineamento della checkbox e della label */
+.contenitore-opzione {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Contenitore della textarea */
+.contenitore-prompt {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* Stile della textarea */
+#testo-prompt {
+    width: 300px;
+    height: 100px;
+    padding: 12px;
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    resize: none; /* Impedisce all'utente di sformare il box */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Focus sulla textarea */
+#testo-prompt:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: #ffffff;
+}
+
+/* Effetto visivo quando il box del prompt è bloccato (senza spunta) */
+#testo-prompt:disabled {
+    background-color: #f1f5f9;  /* Sfondo grigio chiarissimo */
+    border-color: #cbd5e1;      /* Bordo sbiadito */
+    color: #94a3b8;             /* Testo (placeholder) più chiaro */
+    opacity: 0.5;               /* Rende tutto il blocco semitrasparente e "spento" */
+    cursor: not-allowed;        /* Fa comparire il simbolo di divieto quando ci passi col mouse 🚫 */
+}

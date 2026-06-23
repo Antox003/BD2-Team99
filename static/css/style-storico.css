@@ -1,0 +1,261 @@
+/* ========================================= */
+/* IMPOSTAZIONI BASE (Stile Tema)            */
+/* ========================================= */
+.storico-body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    background-color: #e3f2fd; /* Sfondo celeste */
+}
+
+/* ========================================= */
+/* INTESTAZIONE PAGINA                       */
+/* ========================================= */
+.storico-header {
+    text-align: center;
+    padding: clamp(20px, 5vw, 40px) 20px 20px 20px;
+}
+
+.storico-header h1 {
+    color: #2c3e50;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    margin: 0 0 10px 0;
+}
+
+.storico-header p {
+    color: #5c728a;
+    font-size: clamp(16px, 2.5vw, 18px);
+    margin: 0;
+}
+
+/* ========================================= */
+/* AREA PRINCIPALE & TABELLA                 */
+/* ========================================= */
+.storico-main {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centra la tabella orizzontalmente */
+    align-items: flex-start; /* Evita che la tabella si stiri verticalmente */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.storico-table-container {
+    background: #ffffff; 
+    width: clamp(280px, 95%, 1000px); 
+    padding: clamp(15px, 3vw, 30px); 
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(13, 71, 161, 0.1);
+    box-sizing: border-box;
+    overflow-x: auto; /* Abilita scroll orizzontale su schermi piccoli */
+}
+
+.storico-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.storico-table th, 
+.storico-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #bbdefb;
+    color: #2c3e50;
+    vertical-align: middle;
+}
+
+.storico-table th {
+    font-weight: 800;
+    color: #92b4f1;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.storico-table tr:hover {
+    background-color: #f8fbff;
+}
+
+/* ========================================= */
+/* BOTTONE AZIONE (Tabella)                  */
+/* ========================================= */
+.storico-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
+}
+
+.storico-btn:hover {
+    background-color: #0d47a1; 
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(13, 71, 161, 0.3);
+}
+
+/* ========================================= */
+/* MODALE (POPUP SFONDO SCURO)               */
+/* ========================================= */
+.storico-modal {
+    display: none; /* Nascosto via CSS, gestito da JS */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(13, 71, 161, 0.5); /* Overlay blu scuro semi-trasparente */
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Evita che il popup tocchi i bordi su mobile */
+    box-sizing: border-box;
+}
+
+/* ========================================= */
+/* CONTENITORE PRINCIPALE DEL POPUP          */
+/* ========================================= */
+.storico-modal-content {
+    position: relative;
+    background: #ffffff; 
+    width: clamp(280px, 95%, 700px); 
+    max-height: 90vh; /* Se i responsi sono molti, non esce dallo schermo */
+    overflow-y: auto; /* Aggiunge scrollbar interna */
+    padding: clamp(20px, 6vw, 40px); 
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    box-sizing: border-box;
+    animation: comparsaPopup 0.3s ease-out;
+}
+
+/* Animazione di entrata */
+@keyframes comparsaPopup {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Pulsante "X" per chiudere */
+.storico-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #92b4f1;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.storico-close:hover {
+    color: #2c3e50;
+}
+
+/* Titolo Paper dentro il Popup */
+.storico-titolo {
+    margin: 10px 0 clamp(20px, 5vw, 30px) 0;
+    color: #2c3e50;
+    font-size: clamp(1.4rem, 4vw, 26px); 
+    font-weight: 800;
+    line-height: 1.3;
+    padding-right: 20px; /* Evita sovrapposizione con la 'X' */
+}
+
+/* ========================================= */
+/* LAYOUT DEI RESPONSI MULTIPLI              */
+/* ========================================= */
+.storico-lista-responsi {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Spazio tra i vari box di responso */
+}
+
+/* Singolo "Box" di responso dentro il popup */
+.storico-blocco-responso {
+    background: #fcfdfe;
+    border: 1px solid #e3f2fd;
+    border-radius: 20px;
+    padding: clamp(15px, 4vw, 25px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.05);
+}
+
+.storico-categoria-responso {
+    color: #5c728a;
+    font-size: clamp(14px, 3vw, 16px);
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 800;
+}
+
+/* ========================================= */
+/* BADGE DEL VERDETTO                        */
+/* ========================================= */
+.storico-badge {
+    display: inline-block;
+    padding: clamp(8px, 2vw, 12px) clamp(16px, 5vw, 28px);
+    border-radius: 50px;
+    font-size: clamp(14px, 3vw, 16px); 
+    font-weight: 800;
+    margin-bottom: clamp(15px, 6vw, 25px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    align-self: center;
+    text-transform: uppercase;
+}
+
+.storico-badge-accettato {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.storico-badge-revisione {
+    background-color: #fff8e1;
+    color: #f57f17;
+    border: 1px solid #ffecb3;
+}
+
+.storico-badge-rifiutato {
+    background-color: #ffebee;
+    color: rgb(255, 0, 0); /* Rosso originale */
+    border: 1px solid #ffcdd2;
+}
+
+/* ========================================= */
+/* BOX MOTIVAZIONE INTERNO                   */
+/* ========================================= */
+.storico-box-motivazione {
+    background-color: #ffffff; 
+    border-radius: 16px;
+    padding: clamp(15px, 4vw, 20px); 
+    text-align: left;
+    border: 1px solid #bbdefb;
+}
+
+.storico-label-motivazione {
+    font-size: clamp(11px, 2vw, 13px);
+    color: #92b4f1;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.storico-testo-motivazione {
+    color: #2c3e50;
+    font-size: clamp(14px, 2.5vw, 16px); 
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+}

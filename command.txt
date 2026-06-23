@@ -1,0 +1,26 @@
+Attivazione venv su macchine di laboratorio: python3 -m venv llmrev 
+
+Successivamente, per attivare l’ambiente virtuale: 
+(Windows – cmd)       venv\Scripts\activate   
+(Mac o Linux)         source venv/bin/activate  (Macchine laboratorio) -> source llmrev/bin/activate <-
+
+
+Librerie MongoDB:
+pip install pymongo werkzeug
+pip install python-dotenv
+
+Per installare rapidamente tutte le librerie necessarie
+pip install -r requirements.txt
+
+
+Per far ascolatre il db e mettilo in un nuovo terminale:
+./mongodb-linux-x86_64-ubuntu2204-7.0.11/bin/mongod --dbpath ./mongo_data
+
+SE Porta 5000 occupata
+lsof -i :5000
+kill -9 <PID>
+
+
+ACCESSO
+username: admin
+password: LaMiaPasswordSicura123

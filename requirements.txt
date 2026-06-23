@@ -1,0 +1,8 @@
+openai
+pandas
+tqdm
+openpyxl
+pypdf
+requests
+gpt4all
+google-generativeai
